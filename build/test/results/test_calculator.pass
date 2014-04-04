@@ -4,28 +4,64 @@
   :file: test_calculator.c
 :successes:
 - :test: test_evaluate_1_PLUS_2
-  :line: 33
+  :line: 34
   :message: ''
 - :test: test_evaluate_100_MINUS_7
-  :line: 64
+  :line: 65
   :message: ''
 - :test: test_evaluate_60_MULTIPLY_7
-  :line: 95
+  :line: 96
   :message: ''
 - :test: test_evaluate_60_DIVIDE_5
-  :line: 126
+  :line: 127
   :message: ''
 - :test: test_evaluate_60_MODULUS_7
-  :line: 157
+  :line: 158
   :message: ''
 - :test: test_evaluate_56_BITWISEAND_30
-  :line: 188
+  :line: 189
+  :message: ''
+- :test: test_evaluate_90_BITWISEOR_20
+  :line: 220
+  :message: ''
+- :test: test_evaluate_99_BITWISEXOR_66
+  :line: 251
+  :message: ''
+- :test: test_evaluate_90_MINUS_35
+  :line: 281
+  :message: ''
+- :test: test_evaluate_16_BITWISEAND_50
+  :line: 311
+  :message: ''
+- :test: test_evaluate_2_plus_3_plus_4
+  :line: 342
+  :message: ''
+- :test: test_evaluate_10_plus_3_multiply_9
+  :line: 384
+  :message: ''
+- :test: test_evaluate_100_divide_5_multiply_6
+  :line: 426
+  :message: ''
+- :test: test_evaluate_99_XOR_66_divide_11
+  :line: 468
+  :message: ''
+- :test: test_evaluate_100_divide_5_multiply_6_plus_99_minus_20
+  :line: 510
+  :message: ''
+- :test: test_should_return_3_for_1_plus_2
+  :line: 615
+  :message: ''
+- :test: test_should_return_12_for_4_multiply_3
+  :line: 663
+  :message: ''
+- :test: test_should_return_6_for_3_plus_4_plus_5_minus_6
+  :line: 711
   :message: ''
 :failures: []
 :ignores: []
 :counts:
-  :total: 6
-  :passed: 6
+  :total: 18
+  :passed: 18
   :failed: 0
   :ignored: 0
 :stdout: []

@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "calculator.h"
 #include "Token.h"
 #include "Stack.h"
@@ -8,6 +9,8 @@
 #include <String.h>
 #include "calculateToken.h"
 #include "createNumberToken.h"
+#include "Error.h"
+#include <CException.h>
 
 /**
 	Evaluate an expression in text into a value
@@ -21,13 +24,13 @@
 		ERR_NOT_OPERATOR exception if encounter other than Operator token
 		ERR_INVALID_TOKEN exception if encounter unknown token
 **/
-/*
-int evaluate(char *expression){
-	Stack *dataStack;
-	Stack *operatorStack;
+
+int evaluate(char *expression,Stack *dataStack,Stack *operatorStack){
+	
 	Tokenizer *tokenizer;
 	Token *token;
-	
+	OperatorToken *opetoken;
+	ErrorCode e;
 	int i;
 	int counter =0;
 	
@@ -38,30 +41,30 @@ int evaluate(char *expression){
 	
 	while((token=nextToken(tokenizer))!=NULL){
 		if(isNumber(token)){
-			push(token,dataStack);
 			
+			push(token,dataStack);
 		}
-		
+
 		else if(isOperator(token)) 
 		{
-			tryEvaluateOperatorOnStackThenPush(token,dataStack,operatorStack);
-			
+			//tryEvaluateOperatorOnStackThenPush(opetoken,dataStack,operatorStack);
+		
+			push(token,operatorStack);
 		}
+		
 		counter ++;
 	}
-	
 	evaluateAllOperatorOnStack(dataStack,operatorStack);
-	
 	return counter;
 }
-*/
+
 void evaluateOperator(Stack *dataStack,Stack *operatorStack){
 	Token *token1; 
 	Token *token2; 
 	Token *token3;
 	int answer; 
 	Token *answerToken; 
-	OperatorToken *operation; 
+	OperatorToken *operation;
 	NumberToken *num1;
 	NumberToken *num2;
 	
@@ -76,4 +79,59 @@ void evaluateOperator(Stack *dataStack,Stack *operatorStack){
 	push(answerToken,dataStack);
 	
 }
+
+
+void evaluateAllOperatorOnStack(Stack *dataStack,Stack *operatorStack){
+	Token *token1; 
+	Token *token2; 
+	Token *token3;
+	int answer; 
+	Token *answerToken; 
+	OperatorToken *operation;
+	NumberToken *num1;
+	NumberToken *num2;
+
+	while((token1=(Token*)pop(operatorStack))!=NULL)
+	{
+		operation=(OperatorToken*)token1;
+		token2=(Token*)pop(dataStack); 
+		num1=(NumberToken*)token2; 
+		token3=(Token*)pop(dataStack); 
+		num2=(NumberToken*)token3;
+		answer = calculate(operation,num1,num2); 
+		answerToken=createNumberToken(answer);
+		push(answerToken,dataStack);
+	}
+}
+
+void tryEvaluateOperatorOnStackThenPush(OperatorToken *newToken,Stack *dataStack,Stack *operatorStack)
+{
+	OperatorToken *previousToken;
+	previousToken=(OperatorToken*)pop(operatorStack);
+	if(previousToken==NULL)
+	{
+		push(newToken,operatorStack);
+	}
+	else{
+		while(previousToken!=NULL)
+		{
+			if(newToken->precedence >= previousToken->precedence)
+			{
+				break;
+			}
+			else
+			{
+				evaluateAllOperatorOnStack(dataStack,operatorStack);
+			}
+			previousToken=(OperatorToken*)pop(operatorStack);
+		}
+		if(previousToken!=NULL)
+		{
+			push(previousToken,operatorStack);
+		}
+		push(newToken,operatorStack);
+	}
+}
+
 	
+

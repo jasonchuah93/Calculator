@@ -1,6 +1,8 @@
 #ifndef Token_H
 #define Token_H
 
+#include "Stack.h"
+
 typedef enum {UNKNOW_TOKEN,NUMBER_TOKEN,OPERATOR_TOKEN}TokenType;
 
 typedef struct{
@@ -23,7 +25,7 @@ typedef struct {
 	int startIndex;
 }Tokenizer;
 
-//Main functions
-int evaluate(char *expression);
+
+
 
 #endif // Token_H

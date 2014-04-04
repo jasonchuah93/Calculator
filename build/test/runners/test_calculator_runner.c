@@ -8,10 +8,13 @@
   Unity.NumberOfTests++; \
   if (TEST_PROTECT()) \
   { \
+    CEXCEPTION_T e; \
+    Try { \
       CMock_Init(); \
       setUp(); \
       TestFunc(); \
       CMock_Verify(); \
+    } Catch(e) { TEST_ASSERT_EQUAL_HEX32_MESSAGE(CEXCEPTION_NONE, e, "Unhandled Exception!"); } \
   } \
   CMock_Destroy(); \
   if (TEST_PROTECT() && !TEST_IS_IGNORED) \
@@ -26,11 +29,11 @@
 #include "cmock.h"
 #include <setjmp.h>
 #include <stdio.h>
+#include "CException.h"
 #include "mock_Stack.h"
 #include "mock_createNumberToken.h"
 #include "mock_nextToken.h"
 #include "mock_tokenizerNew.h"
-#include "mock_tryEvaluatethenPush.h"
 
 int GlobalExpectCount;
 int GlobalVerifyOrder;
@@ -45,6 +48,18 @@ extern void test_evaluate_60_MULTIPLY_7(void);
 extern void test_evaluate_60_DIVIDE_5(void);
 extern void test_evaluate_60_MODULUS_7(void);
 extern void test_evaluate_56_BITWISEAND_30(void);
+extern void test_evaluate_90_BITWISEOR_20(void);
+extern void test_evaluate_99_BITWISEXOR_66(void);
+extern void test_evaluate_90_MINUS_35(void);
+extern void test_evaluate_16_BITWISEAND_50(void);
+extern void test_evaluate_2_plus_3_plus_4(void);
+extern void test_evaluate_10_plus_3_multiply_9(void);
+extern void test_evaluate_100_divide_5_multiply_6(void);
+extern void test_evaluate_99_XOR_66_divide_11(void);
+extern void test_evaluate_100_divide_5_multiply_6_plus_99_minus_20(void);
+extern void test_should_return_3_for_1_plus_2(void);
+extern void test_should_return_12_for_4_multiply_3(void);
+extern void test_should_return_6_for_3_plus_4_plus_5_minus_6(void);
 
 
 //=======Mock Management=====
@@ -57,7 +72,6 @@ static void CMock_Init(void)
   mock_createNumberToken_Init();
   mock_nextToken_Init();
   mock_tokenizerNew_Init();
-  mock_tryEvaluatethenPush_Init();
 }
 static void CMock_Verify(void)
 {
@@ -65,7 +79,6 @@ static void CMock_Verify(void)
   mock_createNumberToken_Verify();
   mock_nextToken_Verify();
   mock_tokenizerNew_Verify();
-  mock_tryEvaluatethenPush_Verify();
 }
 static void CMock_Destroy(void)
 {
@@ -73,7 +86,6 @@ static void CMock_Destroy(void)
   mock_createNumberToken_Destroy();
   mock_nextToken_Destroy();
   mock_tokenizerNew_Destroy();
-  mock_tryEvaluatethenPush_Destroy();
 }
 
 //=======Test Reset Option=====
@@ -92,12 +104,24 @@ int main(void)
 {
   Unity.TestFile = "test_calculator.c";
   UnityBegin();
-  RUN_TEST(test_evaluate_1_PLUS_2, 33);
-  RUN_TEST(test_evaluate_100_MINUS_7, 64);
-  RUN_TEST(test_evaluate_60_MULTIPLY_7, 95);
-  RUN_TEST(test_evaluate_60_DIVIDE_5, 126);
-  RUN_TEST(test_evaluate_60_MODULUS_7, 157);
-  RUN_TEST(test_evaluate_56_BITWISEAND_30, 188);
+  RUN_TEST(test_evaluate_1_PLUS_2, 34);
+  RUN_TEST(test_evaluate_100_MINUS_7, 65);
+  RUN_TEST(test_evaluate_60_MULTIPLY_7, 96);
+  RUN_TEST(test_evaluate_60_DIVIDE_5, 127);
+  RUN_TEST(test_evaluate_60_MODULUS_7, 158);
+  RUN_TEST(test_evaluate_56_BITWISEAND_30, 189);
+  RUN_TEST(test_evaluate_90_BITWISEOR_20, 220);
+  RUN_TEST(test_evaluate_99_BITWISEXOR_66, 251);
+  RUN_TEST(test_evaluate_90_MINUS_35, 281);
+  RUN_TEST(test_evaluate_16_BITWISEAND_50, 311);
+  RUN_TEST(test_evaluate_2_plus_3_plus_4, 342);
+  RUN_TEST(test_evaluate_10_plus_3_multiply_9, 384);
+  RUN_TEST(test_evaluate_100_divide_5_multiply_6, 426);
+  RUN_TEST(test_evaluate_99_XOR_66_divide_11, 468);
+  RUN_TEST(test_evaluate_100_divide_5_multiply_6_plus_99_minus_20, 510);
+  RUN_TEST(test_should_return_3_for_1_plus_2, 615);
+  RUN_TEST(test_should_return_12_for_4_multiply_3, 663);
+  RUN_TEST(test_should_return_6_for_3_plus_4_plus_5_minus_6, 711);
 
   return (UnityEnd());
 }

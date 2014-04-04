@@ -14,7 +14,7 @@
 		operator the operator to be pushed onto the operator stack 
 		
 **/
-void tryEvaluateOperatorOnStackThenPush(Token *token,Stack *numberStack,Stack *operatorStack);
+void tryEvaluateOperatorOnStackThenPush(OperatorToken *newToken,Stack *dataStack,Stack *operatorStack);
 
 
 #endif //__TRYEVALUATETHANPUSH_H__
