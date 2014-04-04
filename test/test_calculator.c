@@ -802,6 +802,7 @@ void test_should_return_6_for_3_plus_4_plus_5_minus_6(void){
 	createNumberToken_ExpectAndReturn(6,finalAns);
 	push_Expect(finalAns,&dataStack);
 	pop_ExpectAndReturn(&operatorStack,NULL);
+	
 	evaluate("3+4+5-6",&dataStack,&operatorStack);
 	
 }

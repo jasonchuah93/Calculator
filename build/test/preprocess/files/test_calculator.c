@@ -1491,6 +1491,8 @@ void test_should_return_6_for_3_plus_4_plus_5_minus_6(void){
 
  pop_CMockExpectAndReturn(804, &operatorStack, ((void *)0));
 
+
+
  evaluate("3+4+5-6",&dataStack,&operatorStack);
 
 
