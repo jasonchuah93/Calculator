@@ -2,15 +2,15 @@
 :source:
   :path: test
   :file: test_calculator.c
-:successes: []
+:successes:
+- :test: test_evaluate_1_PLUS_2
+  :line: 10
+  :message: ''
 :failures: []
-:ignores:
-- :test: test_module_generator_needs_to_be_implemented
-  :line: 14
-  :message: Implement me!
+:ignores: []
 :counts:
   :total: 1
-  :passed: 0
+  :passed: 1
   :failed: 0
-  :ignored: 1
+  :ignored: 0
 :stdout: []

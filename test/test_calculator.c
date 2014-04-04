@@ -1,15 +1,16 @@
 #include "unity.h"
 #include "calculator.h"
+#include "Token.h"
+#include "Stack.h"
 
-void setUp(void)
-{
-}
+void setUp(void){}
 
-void tearDown(void)
-{
-}
+void tearDown(void){}
 
-void test_module_generator_needs_to_be_implemented(void)
+void test_evaluate_1_PLUS_2(void)
 {
-	TEST_IGNORE_MESSAGE("Implement me!");
+	Tokenizer *tokenizer;
+	Token *token;
+	NumberToken *number;
+	OperatorToken *operator;
 }
