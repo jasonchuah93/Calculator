@@ -10,7 +10,7 @@
 #include "calculateToken.h"
 #include "createNumberToken.h"
 #include "Error.h"
-#include <CException.h>
+#include "CException.h"
 
 /**
 	Evaluate an expression in text into a value

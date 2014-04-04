@@ -3,6 +3,7 @@
 #define _MOCK_STACK_H
 
 #include "Stack.h"
+#include "CException.h"
 
 void mock_Stack_Init(void);
 void mock_Stack_Destroy(void);
@@ -17,17 +18,23 @@ void stackNew_CMockIgnoreAndReturn(UNITY_LINE_TYPE cmock_line, Stack* cmock_to_r
 void stackNew_CMockExpectAndReturn(UNITY_LINE_TYPE cmock_line, Stack* cmock_to_return);
 typedef Stack* (* CMOCK_stackNew_CALLBACK)(int cmock_num_calls);
 void stackNew_StubWithCallback(CMOCK_stackNew_CALLBACK Callback);
+#define stackNew_ExpectAndThrow(cmock_to_throw) stackNew_CMockExpectAndThrow(__LINE__, cmock_to_throw)
+void stackNew_CMockExpectAndThrow(UNITY_LINE_TYPE cmock_line, CEXCEPTION_T cmock_to_throw);
 #define push_Ignore() push_CMockIgnore()
 void push_CMockIgnore(void);
 #define push_Expect(data, stack) push_CMockExpect(__LINE__, data, stack)
 void push_CMockExpect(UNITY_LINE_TYPE cmock_line, void* data, Stack* stack);
 typedef void (* CMOCK_push_CALLBACK)(void* data, Stack* stack, int cmock_num_calls);
 void push_StubWithCallback(CMOCK_push_CALLBACK Callback);
+#define push_ExpectAndThrow(data, stack, cmock_to_throw) push_CMockExpectAndThrow(__LINE__, data, stack, cmock_to_throw)
+void push_CMockExpectAndThrow(UNITY_LINE_TYPE cmock_line, void* data, Stack* stack, CEXCEPTION_T cmock_to_throw);
 #define pop_IgnoreAndReturn(cmock_retval) pop_CMockIgnoreAndReturn(__LINE__, cmock_retval)
 void pop_CMockIgnoreAndReturn(UNITY_LINE_TYPE cmock_line, void* cmock_to_return);
 #define pop_ExpectAndReturn(stack, cmock_retval) pop_CMockExpectAndReturn(__LINE__, stack, cmock_retval)
 void pop_CMockExpectAndReturn(UNITY_LINE_TYPE cmock_line, Stack* stack, void* cmock_to_return);
 typedef void* (* CMOCK_pop_CALLBACK)(Stack* stack, int cmock_num_calls);
 void pop_StubWithCallback(CMOCK_pop_CALLBACK Callback);
+#define pop_ExpectAndThrow(stack, cmock_to_throw) pop_CMockExpectAndThrow(__LINE__, stack, cmock_to_throw)
+void pop_CMockExpectAndThrow(UNITY_LINE_TYPE cmock_line, Stack* stack, CEXCEPTION_T cmock_to_throw);
 
 #endif

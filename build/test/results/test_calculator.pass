@@ -57,11 +57,14 @@
 - :test: test_should_return_6_for_3_plus_4_plus_5_minus_6
   :line: 711
   :message: ''
+- :test: test_should_evaluate_plus_token
+  :line: 811
+  :message: ''
 :failures: []
 :ignores: []
 :counts:
-  :total: 18
-  :passed: 18
+  :total: 19
+  :passed: 19
   :failed: 0
   :ignored: 0
 :stdout: []

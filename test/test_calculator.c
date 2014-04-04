@@ -9,7 +9,7 @@
 #include "mock_createNumberToken.h"
 #include "calculateToken.h"
 #include <String.h>
-#include <CException.h>
+#include "CException.h"
 #include "Error.h"
 
 
@@ -807,7 +807,7 @@ void test_should_return_6_for_3_plus_4_plus_5_minus_6(void){
 	
 }
 
-/*
+
 void test_should_evaluate_plus_token(void){
 	Stack dataStack;
 	Stack operatorStack;
@@ -830,9 +830,8 @@ void test_should_evaluate_plus_token(void){
 	
 	Try{
 		evaluate("+",&dataStack,&operatorStack);
-		TEST_FAIL_MESSAGE("Should throw ERR_NOT_DATA");
-	}Catch(e){
-		TEST_ASSERT_EQUAL(ERR_NOT_DATA,e);
-	}
+		 TEST_FAIL_MESSAGE("Should throw ERR_NOT_DATA");
+	 }Catch(e){
+		 TEST_ASSERT_EQUAL(ERR_NOT_DATA,e);
+	 }
 }
-*/

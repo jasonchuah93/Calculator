@@ -3,6 +3,7 @@
 #define _MOCK_NEXTTOKEN_H
 
 #include "nextToken.h"
+#include "CException.h"
 
 void mock_nextToken_Init(void);
 void mock_nextToken_Destroy(void);
@@ -17,17 +18,23 @@ void nextToken_CMockIgnoreAndReturn(UNITY_LINE_TYPE cmock_line, Token* cmock_to_
 void nextToken_CMockExpectAndReturn(UNITY_LINE_TYPE cmock_line, Tokenizer* tokenizer, Token* cmock_to_return);
 typedef Token* (* CMOCK_nextToken_CALLBACK)(Tokenizer* tokenizer, int cmock_num_calls);
 void nextToken_StubWithCallback(CMOCK_nextToken_CALLBACK Callback);
+#define nextToken_ExpectAndThrow(tokenizer, cmock_to_throw) nextToken_CMockExpectAndThrow(__LINE__, tokenizer, cmock_to_throw)
+void nextToken_CMockExpectAndThrow(UNITY_LINE_TYPE cmock_line, Tokenizer* tokenizer, CEXCEPTION_T cmock_to_throw);
 #define isOperator_IgnoreAndReturn(cmock_retval) isOperator_CMockIgnoreAndReturn(__LINE__, cmock_retval)
 void isOperator_CMockIgnoreAndReturn(UNITY_LINE_TYPE cmock_line, int cmock_to_return);
 #define isOperator_ExpectAndReturn(unknownToken, cmock_retval) isOperator_CMockExpectAndReturn(__LINE__, unknownToken, cmock_retval)
 void isOperator_CMockExpectAndReturn(UNITY_LINE_TYPE cmock_line, Token* unknownToken, int cmock_to_return);
 typedef int (* CMOCK_isOperator_CALLBACK)(Token* unknownToken, int cmock_num_calls);
 void isOperator_StubWithCallback(CMOCK_isOperator_CALLBACK Callback);
+#define isOperator_ExpectAndThrow(unknownToken, cmock_to_throw) isOperator_CMockExpectAndThrow(__LINE__, unknownToken, cmock_to_throw)
+void isOperator_CMockExpectAndThrow(UNITY_LINE_TYPE cmock_line, Token* unknownToken, CEXCEPTION_T cmock_to_throw);
 #define isNumber_IgnoreAndReturn(cmock_retval) isNumber_CMockIgnoreAndReturn(__LINE__, cmock_retval)
 void isNumber_CMockIgnoreAndReturn(UNITY_LINE_TYPE cmock_line, int cmock_to_return);
 #define isNumber_ExpectAndReturn(unknownToken, cmock_retval) isNumber_CMockExpectAndReturn(__LINE__, unknownToken, cmock_retval)
 void isNumber_CMockExpectAndReturn(UNITY_LINE_TYPE cmock_line, Token* unknownToken, int cmock_to_return);
 typedef int (* CMOCK_isNumber_CALLBACK)(Token* unknownToken, int cmock_num_calls);
 void isNumber_StubWithCallback(CMOCK_isNumber_CALLBACK Callback);
+#define isNumber_ExpectAndThrow(unknownToken, cmock_to_throw) isNumber_CMockExpectAndThrow(__LINE__, unknownToken, cmock_to_throw)
+void isNumber_CMockExpectAndThrow(UNITY_LINE_TYPE cmock_line, Token* unknownToken, CEXCEPTION_T cmock_to_throw);
 
 #endif

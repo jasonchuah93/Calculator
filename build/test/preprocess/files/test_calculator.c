@@ -9,6 +9,9 @@
 #include "calculateToken.h"
 #include "Token.h"
 #include "Error.h"
+#include "CException.h"
+
+
 
 
 
@@ -1496,5 +1499,63 @@ void test_should_return_6_for_3_plus_4_plus_5_minus_6(void){
  evaluate("3+4+5-6",&dataStack,&operatorStack);
 
 
+
+}
+
+
+
+
+
+void test_should_evaluate_plus_token(void){
+
+ Stack dataStack;
+
+ Stack operatorStack;
+
+ int check;
+
+ ErrorCode e;
+
+
+
+ Tokenizer tokenizer = {.expression = "+", .startIndex = 0};
+
+
+
+ OperatorToken plus = {.type= OPERATOR_TOKEN, .name = "+", .precedence=70};
+
+ Token *token1 = (Token*)&plus;
+
+
+
+ tokenizerNew_CMockExpectAndReturn(822, "+", &tokenizer);
+
+
+
+ nextToken_CMockExpectAndReturn(824, &tokenizer, token1);
+
+ isNumber_CMockExpectAndReturn(825, token1, 0);
+
+ isOperator_CMockExpectAndReturn(826, token1, 1);
+
+ push_CMockExpect(827, token1, &operatorStack);
+
+ nextToken_CMockExpectAndThrow(828, &tokenizer, ERR_NOT_DATA);
+
+
+
+
+
+ { jmp_buf *PrevFrame, NewFrame; unsigned int MY_ID = (0); PrevFrame = CExceptionFrames[(0)].pFrame; CExceptionFrames[MY_ID].pFrame = (jmp_buf*)(&NewFrame); CExceptionFrames[MY_ID].Exception = (0x5A5A5A5A); if (_setjmp(NewFrame) == 0) { if (&PrevFrame){
+
+  evaluate("+",&dataStack,&operatorStack);
+
+   UnityFail( ("Should throw ERR_NOT_DATA"), (_U_UINT)833);;
+
+  }else { } CExceptionFrames[MY_ID].Exception = (0x5A5A5A5A); } else { e = CExceptionFrames[MY_ID].Exception; e=e; } CExceptionFrames[MY_ID].pFrame = PrevFrame; } if (CExceptionFrames[(0)].Exception != (0x5A5A5A5A)){
+
+   UnityAssertEqualNumber((_U_SINT)((ERR_NOT_DATA)), (_U_SINT)((e)), (((void *)0)), (_U_UINT)835, UNITY_DISPLAY_STYLE_INT);
+
+  }
 
 }

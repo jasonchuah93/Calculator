@@ -12,6 +12,7 @@ typedef struct _CMOCK_tokenizerNew_CALL_INSTANCE
   Tokenizer* ReturnVal;
   int CallOrder;
   char* Expected_text;
+  CEXCEPTION_T ExceptionToThrow;
 
 } CMOCK_tokenizerNew_CALL_INSTANCE;
 
@@ -76,6 +77,10 @@ Tokenizer* tokenizerNew(char* text)
   if (cmock_call_instance->CallOrder < GlobalVerifyOrder)
     UNITY_TEST_FAIL(cmock_line, "Function 'tokenizerNew' called later than expected.");
   UNITY_TEST_ASSERT_EQUAL_STRING(cmock_call_instance->Expected_text, text, cmock_line, "Function 'tokenizerNew' called with unexpected value for argument 'text'.");
+  if (cmock_call_instance->ExceptionToThrow != CEXCEPTION_NONE)
+  {
+    Throw(cmock_call_instance->ExceptionToThrow);
+  }
   return cmock_call_instance->ReturnVal;
 }
 
@@ -91,6 +96,7 @@ void tokenizerNew_CMockIgnoreAndReturn(UNITY_LINE_TYPE cmock_line, Tokenizer* cm
   UNITY_TEST_ASSERT_NOT_NULL(cmock_call_instance, cmock_line, "CMock has run out of memory. Please allocate more.");
   Mock.tokenizerNew_CallInstance = CMock_Guts_MemChain(Mock.tokenizerNew_CallInstance, cmock_guts_index);
   cmock_call_instance->LineNumber = cmock_line;
+  cmock_call_instance->ExceptionToThrow = CEXCEPTION_NONE;
   cmock_call_instance->ReturnVal = cmock_to_return;
   Mock.tokenizerNew_IgnoreBool = (int)1;
 }
@@ -103,6 +109,7 @@ void tokenizerNew_CMockExpectAndReturn(UNITY_LINE_TYPE cmock_line, char* text, T
   Mock.tokenizerNew_CallInstance = CMock_Guts_MemChain(Mock.tokenizerNew_CallInstance, cmock_guts_index);
   cmock_call_instance->LineNumber = cmock_line;
   cmock_call_instance->CallOrder = ++GlobalExpectCount;
+  cmock_call_instance->ExceptionToThrow = CEXCEPTION_NONE;
   CMockExpectParameters_tokenizerNew(cmock_call_instance, text);
   cmock_call_instance->ReturnVal = cmock_to_return;
 }
@@ -110,5 +117,18 @@ void tokenizerNew_CMockExpectAndReturn(UNITY_LINE_TYPE cmock_line, char* text, T
 void tokenizerNew_StubWithCallback(CMOCK_tokenizerNew_CALLBACK Callback)
 {
   Mock.tokenizerNew_CallbackFunctionPointer = Callback;
+}
+
+void tokenizerNew_CMockExpectAndThrow(UNITY_LINE_TYPE cmock_line, char* text, CEXCEPTION_T cmock_to_throw)
+{
+  CMOCK_MEM_INDEX_TYPE cmock_guts_index = CMock_Guts_MemNew(sizeof(CMOCK_tokenizerNew_CALL_INSTANCE));
+  CMOCK_tokenizerNew_CALL_INSTANCE* cmock_call_instance = (CMOCK_tokenizerNew_CALL_INSTANCE*)CMock_Guts_GetAddressFor(cmock_guts_index);
+  UNITY_TEST_ASSERT_NOT_NULL(cmock_call_instance, cmock_line, "CMock has run out of memory. Please allocate more.");
+  Mock.tokenizerNew_CallInstance = CMock_Guts_MemChain(Mock.tokenizerNew_CallInstance, cmock_guts_index);
+  cmock_call_instance->LineNumber = cmock_line;
+  cmock_call_instance->CallOrder = ++GlobalExpectCount;
+  cmock_call_instance->ExceptionToThrow = CEXCEPTION_NONE;
+  CMockExpectParameters_tokenizerNew(cmock_call_instance, text);
+  cmock_call_instance->ExceptionToThrow = cmock_to_throw;
 }
 

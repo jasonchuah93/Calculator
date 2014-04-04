@@ -60,6 +60,7 @@ extern void test_evaluate_100_divide_5_multiply_6_plus_99_minus_20(void);
 extern void test_should_return_3_for_1_plus_2(void);
 extern void test_should_return_12_for_4_multiply_3(void);
 extern void test_should_return_6_for_3_plus_4_plus_5_minus_6(void);
+extern void test_should_evaluate_plus_token(void);
 
 
 //=======Mock Management=====
@@ -122,6 +123,7 @@ int main(void)
   RUN_TEST(test_should_return_3_for_1_plus_2, 615);
   RUN_TEST(test_should_return_12_for_4_multiply_3, 663);
   RUN_TEST(test_should_return_6_for_3_plus_4_plus_5_minus_6, 711);
+  RUN_TEST(test_should_evaluate_plus_token, 811);
 
   return (UnityEnd());
 }
