@@ -8,9 +8,12 @@
   Unity.NumberOfTests++; \
   if (TEST_PROTECT()) \
   { \
+      CMock_Init(); \
       setUp(); \
       TestFunc(); \
+      CMock_Verify(); \
   } \
+  CMock_Destroy(); \
   if (TEST_PROTECT() && !TEST_IS_IGNORED) \
   { \
     tearDown(); \
@@ -20,8 +23,14 @@
 
 //=======Automagically Detected Files To Include=====
 #include "unity.h"
+#include "cmock.h"
 #include <setjmp.h>
 #include <stdio.h>
+#include "mock_Stack.h"
+#include "mock_createNumberToken.h"
+#include "mock_nextToken.h"
+#include "mock_tokenizerNew.h"
+#include "mock_tryEvaluatethenPush.h"
 
 int GlobalExpectCount;
 int GlobalVerifyOrder;
@@ -31,12 +40,49 @@ char* GlobalOrderError;
 extern void setUp(void);
 extern void tearDown(void);
 extern void test_evaluate_1_PLUS_2(void);
+extern void test_evaluate_100_MINUS_7(void);
+extern void test_evaluate_60_MULTIPLY_7(void);
+extern void test_evaluate_60_DIVIDE_5(void);
+extern void test_evaluate_60_MODULUS_7(void);
+extern void test_evaluate_56_BITWISEAND_30(void);
 
+
+//=======Mock Management=====
+static void CMock_Init(void)
+{
+  GlobalExpectCount = 0;
+  GlobalVerifyOrder = 0;
+  GlobalOrderError = NULL;
+  mock_Stack_Init();
+  mock_createNumberToken_Init();
+  mock_nextToken_Init();
+  mock_tokenizerNew_Init();
+  mock_tryEvaluatethenPush_Init();
+}
+static void CMock_Verify(void)
+{
+  mock_Stack_Verify();
+  mock_createNumberToken_Verify();
+  mock_nextToken_Verify();
+  mock_tokenizerNew_Verify();
+  mock_tryEvaluatethenPush_Verify();
+}
+static void CMock_Destroy(void)
+{
+  mock_Stack_Destroy();
+  mock_createNumberToken_Destroy();
+  mock_nextToken_Destroy();
+  mock_tokenizerNew_Destroy();
+  mock_tryEvaluatethenPush_Destroy();
+}
 
 //=======Test Reset Option=====
 void resetTest()
 {
+  CMock_Verify();
+  CMock_Destroy();
   tearDown();
+  CMock_Init();
   setUp();
 }
 
@@ -46,7 +92,12 @@ int main(void)
 {
   Unity.TestFile = "test_calculator.c";
   UnityBegin();
-  RUN_TEST(test_evaluate_1_PLUS_2, 10);
+  RUN_TEST(test_evaluate_1_PLUS_2, 33);
+  RUN_TEST(test_evaluate_100_MINUS_7, 64);
+  RUN_TEST(test_evaluate_60_MULTIPLY_7, 95);
+  RUN_TEST(test_evaluate_60_DIVIDE_5, 126);
+  RUN_TEST(test_evaluate_60_MODULUS_7, 157);
+  RUN_TEST(test_evaluate_56_BITWISEAND_30, 188);
 
   return (UnityEnd());
 }

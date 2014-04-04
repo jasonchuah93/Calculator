@@ -19,7 +19,7 @@ typedef struct {
 }OperatorToken;
 
 typedef struct {
-	char *rawString;
+	char *expression;
 	int startIndex;
 }Tokenizer;
 

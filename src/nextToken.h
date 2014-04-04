@@ -7,4 +7,7 @@
 
 Token *nextToken(Tokenizer *tokenizer);
 
+int isOperator(Token * unknownToken);
+int isNumber(Token * unknownToken);
+
 #endif //__GETTOKEN_H__

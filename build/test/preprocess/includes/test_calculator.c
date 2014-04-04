@@ -1,5 +1,11 @@
 ---
-- Stack.h
 - Token.h
+- calculateToken.h
 - calculator.h
+- mock_Stack.h
+- mock_createNumberToken.h
+- mock_nextToken.h
+- mock_tokenizerNew.h
+- mock_tryEvaluatethenPush.h
+- operatorEvaluate.h
 - unity.h
