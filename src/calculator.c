@@ -63,7 +63,7 @@ int evaluate(char *expression,Stack *dataStack,Stack *operatorStack){
 	}
 	evaluateAllOperatorOnStack(dataStack,operatorStack);
 	result=(NumberToken*)pop(dataStack);
-	
+	printf("counter needed for each expression : %d \n",counter);
 	return result->value;
 }
 

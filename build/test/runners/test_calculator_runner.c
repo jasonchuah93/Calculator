@@ -136,8 +136,8 @@ int main(void)
   RUN_TEST(test_tryEvaluateOperatorOnStackThenPush_evaluate_all_operatorTokens_to_be_push_in_the_operator_stack_2, 612);
   RUN_TEST(test_shunting_yard_should_return_0_if_the_expression_is_null, 651);
   RUN_TEST(test_should_return_3_for_1_plus_2, 676);
-  RUN_TEST(test_should_return_12_for_4_multiply_3, 730);
-  RUN_TEST(test_should_return_6_for_3_plus_4_plus_5_minus_6, 783);
+  RUN_TEST(test_should_return_12_for_4_multiply_3, 731);
+  RUN_TEST(test_should_return_6_for_3_plus_4_plus_5_minus_6, 785);
 
   return (UnityEnd());
 }

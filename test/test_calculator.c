@@ -724,6 +724,7 @@ void test_should_return_3_for_1_plus_2(void){
 	
 	check=evaluate("1+2",&dataStack,&operatorStack);
 	TEST_ASSERT_EQUAL(3,check);
+	printf("Answer : %d ",check);
 }
 
 
@@ -778,6 +779,7 @@ void test_should_return_12_for_4_multiply_3(void){
 	
 	check=evaluate("4*3",&dataStack,&operatorStack);
 	TEST_ASSERT_EQUAL(12,check);
+	printf("Answer : %d ",check);
 }
 
 void test_should_return_6_for_3_plus_4_plus_5_minus_6(void){
@@ -796,11 +798,15 @@ void test_should_return_6_for_3_plus_4_plus_5_minus_6(void){
 	NumberToken number4 = {.type= NUMBER_TOKEN, .value=4};
 	Token *token3 = (Token*)&number4;
 	
+	NumberToken tempAns1 = {.type= NUMBER_TOKEN, .value=7};
+	
 	OperatorToken add = {.type= OPERATOR_TOKEN, .name = "+", .precedence=70};
 	Token *token4 = (Token*)&add;
 	
 	NumberToken number5 = {.type= NUMBER_TOKEN, .value=5};
 	Token *token5 = (Token*)&number5;
+	
+	NumberToken tempAns2 = {.type= NUMBER_TOKEN, .value=12};
 	
 	OperatorToken minus = {.type= OPERATOR_TOKEN, .name = "-", .precedence=70};
 	Token *token6 = (Token*)&minus;
@@ -808,6 +814,7 @@ void test_should_return_6_for_3_plus_4_plus_5_minus_6(void){
 	NumberToken number6 = {.type= NUMBER_TOKEN, .value=6};
 	Token *token7 = (Token*)&number6;
 	
+	NumberToken finalAns = {.type= NUMBER_TOKEN, .value=6};
 	
 	stackNew_ExpectAndReturn(&dataStack);
 	stackNew_ExpectAndReturn(&operatorStack);
@@ -829,18 +836,53 @@ void test_should_return_6_for_3_plus_4_plus_5_minus_6(void){
 	isNumber_ExpectAndReturn(token3,1);
 	push_Expect(token3,&dataStack);
 	
-	//Operator token plus
+	//Operator token plus and evaluate to push anot
 	nextToken_ExpectAndReturn(&tokenizer,token4);
 	isNumber_ExpectAndReturn(token4,0);
 	isOperator_ExpectAndReturn(token4,1);
 	pop_ExpectAndReturn(&operatorStack,token2);
+	pop_ExpectAndReturn(&dataStack,token3);
+	pop_ExpectAndReturn(&dataStack,token1);
+	createNumberToken_ExpectAndReturn(7,&tempAns1);
+	push_Expect(&tempAns1,&dataStack);
+	pop_ExpectAndReturn(&operatorStack,NULL);
+	push_Expect(token4,&operatorStack);
 	
+	//Number 5
+	nextToken_ExpectAndReturn(&tokenizer,token5);
+	isNumber_ExpectAndReturn(token5,1);
+	push_Expect(token5,&dataStack);
 	
+	//Operator token minus and evaluate to push anot
+	nextToken_ExpectAndReturn(&tokenizer,token6);
+	isNumber_ExpectAndReturn(token6,0);
+	isOperator_ExpectAndReturn(token6,1);
+	pop_ExpectAndReturn(&operatorStack,token4);
+	pop_ExpectAndReturn(&dataStack,token5);
+	pop_ExpectAndReturn(&dataStack,&tempAns1);
+	createNumberToken_ExpectAndReturn(12,&tempAns2);
+	push_Expect(&tempAns2,&dataStack);
+	pop_ExpectAndReturn(&operatorStack,NULL);
+	push_Expect(token6,&operatorStack);
+	
+	//Number 6
+	nextToken_ExpectAndReturn(&tokenizer,token7);
+	isNumber_ExpectAndReturn(token7,1);
+	push_Expect(token7,&dataStack);
+	nextToken_ExpectAndReturn(&tokenizer,NULL);
+	
+	//Calculation
+	pop_ExpectAndReturn(&operatorStack,token6);
+	pop_ExpectAndReturn(&dataStack,token7);
+	pop_ExpectAndReturn(&dataStack,&tempAns2);
+	createNumberToken_ExpectAndReturn(6,&finalAns);
+	push_Expect(&finalAns,&dataStack);
+	pop_ExpectAndReturn(&operatorStack,NULL);
+	
+	pop_ExpectAndReturn(&dataStack,&finalAns); 
 	check=evaluate("3+4+5-6",&dataStack,&operatorStack);
-	TEST_ASSERT_EQUAL(12,check);
-
-
-
+	TEST_ASSERT_EQUAL(6,check);
+	printf("Answer : %d ",check);
 
 }
 	
