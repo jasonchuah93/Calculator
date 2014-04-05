@@ -4,7 +4,7 @@
 #include "Token.h"
 
 //Function declaration
-Token *createNumberToken(int number);
+NumberToken *createNumberToken(int number);
 
 
 

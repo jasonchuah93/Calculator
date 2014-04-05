@@ -29,21 +29,25 @@ int evaluate(char *expression,Stack *dataStack,Stack *operatorStack){
 	
 	Tokenizer *tokenizer;
 	Token *token;
+	Token *ansToken;
 	ErrorCode e;
 	int i;
 	int counter =0;
+	NumberToken *result;
 	
+	dataStack=stackNew();
+	operatorStack=stackNew();
 	tokenizer = tokenizerNew(expression);
 	if(expression ==NULL){	
 		Throw(ERR_NO_EXPRESSION);
 	}
 	
 	while((token=nextToken(tokenizer))!=NULL){
-		if(isNumber(token)){
-			Throw(ERR_NOT_OPERATOR);
-		}
-		else if(isOperator(token)){
+		if(counter%2==0&&token->type==OPERATOR_TOKEN){
 			Throw(ERR_NOT_DATA);
+		}
+		else if(counter%2!=0&&token->type==NUMBER_TOKEN){
+			Throw(ERR_NOT_OPERATOR);
 		}
 		
 		if(isNumber(token)){
@@ -53,14 +57,23 @@ int evaluate(char *expression,Stack *dataStack,Stack *operatorStack){
 		else if(isOperator(token)) 
 		{
 			tryEvaluateOperatorOnStackThenPush((OperatorToken*)token,dataStack,operatorStack);
-			//push(token,operatorStack);
 		}
 		
 		counter ++;
 	}
 	evaluateAllOperatorOnStack(dataStack,operatorStack);
-	return counter;
+	result=(NumberToken*)pop(dataStack);
+	
+	return result->value;
 }
+
+/**
+	Evaluate all operators on the operator stack, with top of stack 
+	operator being evaluated first.
+	
+	Input :
+		stack the operatorStack
+**/
 
 void evaluateOperator(Stack *dataStack,OperatorToken *opeToken){
 	NumberToken *num1;
@@ -68,7 +81,7 @@ void evaluateOperator(Stack *dataStack,OperatorToken *opeToken){
 	Token *token1; 
 	Token *token2; 
 	int answer; 
-	Token *answerToken; 
+	NumberToken *answerToken; 
 	token1=(Token*)pop(dataStack); 
 	num1=(NumberToken*)token1; 
 	token2=(Token*)pop(dataStack); 
@@ -78,14 +91,34 @@ void evaluateOperator(Stack *dataStack,OperatorToken *opeToken){
 	push(answerToken,dataStack);
 	
 }
+
+/**
+	Evaluate all operators on the operator stack, with top of stack 
+	operator being evaluated first.
+	
+	Input :
+		stack the operatorStack
+**/
+
 void evaluateAllOperatorOnStack(Stack *dataStack,Stack *operatorStack){
 	
 	OperatorToken *opeToken;
-	while((opeToken=pop(operatorStack)))
+	while((opeToken=pop(operatorStack))!=NULL)
 	{
 		evaluateOperator(dataStack,opeToken);
 	}
 }
+
+/**
+	Evaluate all operators on the operator stack that have strictly lower
+	precedence than the operator to be pushed. The evaluation of operators
+	is from the top of stack to bottom
+	
+	Input :
+		stack the operatorStack
+		operator the operator to be pushed onto the operator stack 
+		
+**/
 
 void tryEvaluateOperatorOnStackThenPush(OperatorToken *newToken,Stack *dataStack,Stack *operatorStack)
 {

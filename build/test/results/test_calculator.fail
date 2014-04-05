@@ -1,0 +1,91 @@
+---
+:source:
+  :path: test
+  :file: test_calculator.c
+:successes:
+- :test: test_evaluate_should_throw_error_when_encounter_invalid_operator
+  :line: 24
+  :message: ''
+- :test: test_evaluate_1_PLUS_2
+  :line: 49
+  :message: ''
+- :test: test_evaluate_100_MINUS_7
+  :line: 70
+  :message: ''
+- :test: test_evaluate_60_MULTIPLY_7
+  :line: 91
+  :message: ''
+- :test: test_evaluate_60_DIVIDE_5
+  :line: 114
+  :message: ''
+- :test: test_evaluate_60_MODULUS_7
+  :line: 136
+  :message: ''
+- :test: test_evaluate_56_BITWISEAND_30
+  :line: 158
+  :message: ''
+- :test: test_evaluate_90_BITWISEOR_20
+  :line: 180
+  :message: ''
+- :test: test_evaluate_99_BITWISEXOR_66
+  :line: 202
+  :message: ''
+- :test: test_evaluate_90_MINUS_35
+  :line: 224
+  :message: ''
+- :test: test_evaluate_16_BITWISEAND_50
+  :line: 245
+  :message: ''
+- :test: test_evaluateAllOperatorOnStack_2_plus_3_plus_4
+  :line: 271
+  :message: ''
+- :test: test_evaluateAllOperatorOnStack_10_plus_3_multiply_9
+  :line: 312
+  :message: ''
+- :test: test_evaluateAllOperatorOnStack_100_divide_5_multiply_6
+  :line: 353
+  :message: ''
+- :test: test_evaluateAllOperatorOnStack_99_XOR_66_divide_11
+  :line: 395
+  :message: ''
+- :test: test_evaluateAllOperatorOnStack_100_divide_5_multiply_6_plus_99_minus_20
+  :line: 436
+  :message: ''
+- :test: test_tryEvaluateOperatorOnStaclThenPush_will_push_OperatorTOken_if_Operator_Stack_is_empty
+  :line: 508
+  :message: ''
+- :test: test_tryEvaluateOperatorOnStaclThenPush_will_push_OperatorTOken_into_Operator_Stack_if_newToken_precendence_is_higher_than_previousToken
+  :line: 518
+  :message: ''
+- :test: test_tryEvaluateOperatorOnStackThenPush_will_not_push_OperatorTOken_into_Operator_Stack_if_newToken_precendence_is_lower_than_previousToken
+  :line: 532
+  :message: ''
+- :test: test_tryEvaluateOperatorOnStackThenPush_evaluate_newToke_and_previousToken_if_both_have_same_precedence
+  :line: 557
+  :message: ''
+- :test: test_tryEvaluateOperatorOnStackThenPush_evaluate_all_operatorTokens_to_be_push_in_the_operator_stack_1
+  :line: 582
+  :message: ''
+- :test: test_tryEvaluateOperatorOnStackThenPush_evaluate_all_operatorTokens_to_be_push_in_the_operator_stack_2
+  :line: 612
+  :message: ''
+- :test: test_shunting_yard_should_return_0_if_the_expression_is_null
+  :line: 651
+  :message: ''
+- :test: test_should_return_3_for_1_plus_2
+  :line: 676
+  :message: ''
+- :test: test_should_return_12_for_4_multiply_3
+  :line: 730
+  :message: ''
+:failures:
+- :test: test_should_return_6_for_3_plus_4_plus_5_minus_6
+  :line: 783
+  :message: Function 'push' called more times than expected.
+:ignores: []
+:counts:
+  :total: 26
+  :passed: 25
+  :failed: 1
+  :ignored: 0
+:stdout: []

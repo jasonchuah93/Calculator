@@ -9,7 +9,7 @@
 typedef struct _CMOCK_createNumberToken_CALL_INSTANCE
 {
   UNITY_LINE_TYPE LineNumber;
-  Token* ReturnVal;
+  NumberToken* ReturnVal;
   int CallOrder;
   int Expected_number;
   CEXCEPTION_T ExceptionToThrow;
@@ -19,7 +19,7 @@ typedef struct _CMOCK_createNumberToken_CALL_INSTANCE
 static struct mock_createNumberTokenInstance
 {
   int createNumberToken_IgnoreBool;
-  Token* createNumberToken_FinalReturn;
+  NumberToken* createNumberToken_FinalReturn;
   CMOCK_createNumberToken_CALLBACK createNumberToken_CallbackFunctionPointer;
   int createNumberToken_CallbackCalls;
   CMOCK_MEM_INDEX_TYPE createNumberToken_CallInstance;
@@ -54,7 +54,7 @@ void mock_createNumberToken_Destroy(void)
   GlobalVerifyOrder = 0;
 }
 
-Token* createNumberToken(int number)
+NumberToken* createNumberToken(int number)
 {
   UNITY_LINE_TYPE cmock_line = TEST_LINE_NUM;
   CMOCK_createNumberToken_CALL_INSTANCE* cmock_call_instance = (CMOCK_createNumberToken_CALL_INSTANCE*)CMock_Guts_GetAddressFor(Mock.createNumberToken_CallInstance);
@@ -89,7 +89,7 @@ void CMockExpectParameters_createNumberToken(CMOCK_createNumberToken_CALL_INSTAN
   cmock_call_instance->Expected_number = number;
 }
 
-void createNumberToken_CMockIgnoreAndReturn(UNITY_LINE_TYPE cmock_line, Token* cmock_to_return)
+void createNumberToken_CMockIgnoreAndReturn(UNITY_LINE_TYPE cmock_line, NumberToken* cmock_to_return)
 {
   CMOCK_MEM_INDEX_TYPE cmock_guts_index = CMock_Guts_MemNew(sizeof(CMOCK_createNumberToken_CALL_INSTANCE));
   CMOCK_createNumberToken_CALL_INSTANCE* cmock_call_instance = (CMOCK_createNumberToken_CALL_INSTANCE*)CMock_Guts_GetAddressFor(cmock_guts_index);
@@ -101,7 +101,7 @@ void createNumberToken_CMockIgnoreAndReturn(UNITY_LINE_TYPE cmock_line, Token* c
   Mock.createNumberToken_IgnoreBool = (int)1;
 }
 
-void createNumberToken_CMockExpectAndReturn(UNITY_LINE_TYPE cmock_line, int number, Token* cmock_to_return)
+void createNumberToken_CMockExpectAndReturn(UNITY_LINE_TYPE cmock_line, int number, NumberToken* cmock_to_return)
 {
   CMOCK_MEM_INDEX_TYPE cmock_guts_index = CMock_Guts_MemNew(sizeof(CMOCK_createNumberToken_CALL_INSTANCE));
   CMOCK_createNumberToken_CALL_INSTANCE* cmock_call_instance = (CMOCK_createNumberToken_CALL_INSTANCE*)CMock_Guts_GetAddressFor(cmock_guts_index);

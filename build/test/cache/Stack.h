@@ -14,6 +14,8 @@ typedef struct{
 
 
 
+
+
 Stack *stackNew(void);
 
 void push(void *data,Stack *stack);

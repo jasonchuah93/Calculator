@@ -42,7 +42,6 @@ char* GlobalOrderError;
 //=======External Functions This Runner Calls=====
 extern void setUp(void);
 extern void tearDown(void);
-extern void test_shunting_yard_should_return_0_if_the_expression_is_null(void);
 extern void test_evaluate_should_throw_error_when_encounter_invalid_operator(void);
 extern void test_evaluate_1_PLUS_2(void);
 extern void test_evaluate_100_MINUS_7(void);
@@ -65,6 +64,10 @@ extern void test_tryEvaluateOperatorOnStackThenPush_will_not_push_OperatorTOken_
 extern void test_tryEvaluateOperatorOnStackThenPush_evaluate_newToke_and_previousToken_if_both_have_same_precedence(void);
 extern void test_tryEvaluateOperatorOnStackThenPush_evaluate_all_operatorTokens_to_be_push_in_the_operator_stack_1(void);
 extern void test_tryEvaluateOperatorOnStackThenPush_evaluate_all_operatorTokens_to_be_push_in_the_operator_stack_2(void);
+extern void test_shunting_yard_should_return_0_if_the_expression_is_null(void);
+extern void test_should_return_3_for_1_plus_2(void);
+extern void test_should_return_12_for_4_multiply_3(void);
+extern void test_should_return_6_for_3_plus_4_plus_5_minus_6(void);
 
 
 //=======Mock Management=====
@@ -109,29 +112,32 @@ int main(void)
 {
   Unity.TestFile = "test_calculator.c";
   UnityBegin();
-  RUN_TEST(test_shunting_yard_should_return_0_if_the_expression_is_null, 24);
-  RUN_TEST(test_evaluate_should_throw_error_when_encounter_invalid_operator, 47);
-  RUN_TEST(test_evaluate_1_PLUS_2, 72);
-  RUN_TEST(test_evaluate_100_MINUS_7, 94);
-  RUN_TEST(test_evaluate_60_MULTIPLY_7, 115);
-  RUN_TEST(test_evaluate_60_DIVIDE_5, 138);
-  RUN_TEST(test_evaluate_60_MODULUS_7, 160);
-  RUN_TEST(test_evaluate_56_BITWISEAND_30, 182);
-  RUN_TEST(test_evaluate_90_BITWISEOR_20, 204);
-  RUN_TEST(test_evaluate_99_BITWISEXOR_66, 226);
-  RUN_TEST(test_evaluate_90_MINUS_35, 248);
-  RUN_TEST(test_evaluate_16_BITWISEAND_50, 269);
-  RUN_TEST(test_evaluateAllOperatorOnStack_2_plus_3_plus_4, 295);
-  RUN_TEST(test_evaluateAllOperatorOnStack_10_plus_3_multiply_9, 337);
-  RUN_TEST(test_evaluateAllOperatorOnStack_100_divide_5_multiply_6, 379);
-  RUN_TEST(test_evaluateAllOperatorOnStack_99_XOR_66_divide_11, 421);
-  RUN_TEST(test_evaluateAllOperatorOnStack_100_divide_5_multiply_6_plus_99_minus_20, 463);
-  RUN_TEST(test_tryEvaluateOperatorOnStaclThenPush_will_push_OperatorTOken_if_Operator_Stack_is_empty, 538);
-  RUN_TEST(test_tryEvaluateOperatorOnStaclThenPush_will_push_OperatorTOken_into_Operator_Stack_if_newToken_precendence_is_higher_than_previousToken, 548);
-  RUN_TEST(test_tryEvaluateOperatorOnStackThenPush_will_not_push_OperatorTOken_into_Operator_Stack_if_newToken_precendence_is_lower_than_previousToken, 562);
-  RUN_TEST(test_tryEvaluateOperatorOnStackThenPush_evaluate_newToke_and_previousToken_if_both_have_same_precedence, 587);
-  RUN_TEST(test_tryEvaluateOperatorOnStackThenPush_evaluate_all_operatorTokens_to_be_push_in_the_operator_stack_1, 611);
-  RUN_TEST(test_tryEvaluateOperatorOnStackThenPush_evaluate_all_operatorTokens_to_be_push_in_the_operator_stack_2, 643);
+  RUN_TEST(test_evaluate_should_throw_error_when_encounter_invalid_operator, 24);
+  RUN_TEST(test_evaluate_1_PLUS_2, 49);
+  RUN_TEST(test_evaluate_100_MINUS_7, 70);
+  RUN_TEST(test_evaluate_60_MULTIPLY_7, 91);
+  RUN_TEST(test_evaluate_60_DIVIDE_5, 114);
+  RUN_TEST(test_evaluate_60_MODULUS_7, 136);
+  RUN_TEST(test_evaluate_56_BITWISEAND_30, 158);
+  RUN_TEST(test_evaluate_90_BITWISEOR_20, 180);
+  RUN_TEST(test_evaluate_99_BITWISEXOR_66, 202);
+  RUN_TEST(test_evaluate_90_MINUS_35, 224);
+  RUN_TEST(test_evaluate_16_BITWISEAND_50, 245);
+  RUN_TEST(test_evaluateAllOperatorOnStack_2_plus_3_plus_4, 271);
+  RUN_TEST(test_evaluateAllOperatorOnStack_10_plus_3_multiply_9, 312);
+  RUN_TEST(test_evaluateAllOperatorOnStack_100_divide_5_multiply_6, 353);
+  RUN_TEST(test_evaluateAllOperatorOnStack_99_XOR_66_divide_11, 395);
+  RUN_TEST(test_evaluateAllOperatorOnStack_100_divide_5_multiply_6_plus_99_minus_20, 436);
+  RUN_TEST(test_tryEvaluateOperatorOnStaclThenPush_will_push_OperatorTOken_if_Operator_Stack_is_empty, 508);
+  RUN_TEST(test_tryEvaluateOperatorOnStaclThenPush_will_push_OperatorTOken_into_Operator_Stack_if_newToken_precendence_is_higher_than_previousToken, 518);
+  RUN_TEST(test_tryEvaluateOperatorOnStackThenPush_will_not_push_OperatorTOken_into_Operator_Stack_if_newToken_precendence_is_lower_than_previousToken, 532);
+  RUN_TEST(test_tryEvaluateOperatorOnStackThenPush_evaluate_newToke_and_previousToken_if_both_have_same_precedence, 557);
+  RUN_TEST(test_tryEvaluateOperatorOnStackThenPush_evaluate_all_operatorTokens_to_be_push_in_the_operator_stack_1, 582);
+  RUN_TEST(test_tryEvaluateOperatorOnStackThenPush_evaluate_all_operatorTokens_to_be_push_in_the_operator_stack_2, 612);
+  RUN_TEST(test_shunting_yard_should_return_0_if_the_expression_is_null, 651);
+  RUN_TEST(test_should_return_3_for_1_plus_2, 676);
+  RUN_TEST(test_should_return_12_for_4_multiply_3, 730);
+  RUN_TEST(test_should_return_6_for_3_plus_4_plus_5_minus_6, 783);
 
   return (UnityEnd());
 }

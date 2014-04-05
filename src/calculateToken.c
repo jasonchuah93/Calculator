@@ -4,6 +4,15 @@
 #include "calculateToken.h"
 #include "Error.h"
 
+
+/**
+	Calculate 2 number token and return the answer back 
+	Input :
+		NumberTokens
+		OperatorToken
+	Output : 
+		answer
+**/
 int calculate(OperatorToken *opeToken, NumberToken *first, NumberToken *second){
 	
 	int answer;
@@ -52,4 +61,4 @@ int calculate(OperatorToken *opeToken, NumberToken *first, NumberToken *second){
 	}
 	
 	return answer;
-}
+}	

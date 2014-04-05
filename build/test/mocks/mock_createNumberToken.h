@@ -13,10 +13,10 @@ void mock_createNumberToken_Verify(void);
 
 
 #define createNumberToken_IgnoreAndReturn(cmock_retval) createNumberToken_CMockIgnoreAndReturn(__LINE__, cmock_retval)
-void createNumberToken_CMockIgnoreAndReturn(UNITY_LINE_TYPE cmock_line, Token* cmock_to_return);
+void createNumberToken_CMockIgnoreAndReturn(UNITY_LINE_TYPE cmock_line, NumberToken* cmock_to_return);
 #define createNumberToken_ExpectAndReturn(number, cmock_retval) createNumberToken_CMockExpectAndReturn(__LINE__, number, cmock_retval)
-void createNumberToken_CMockExpectAndReturn(UNITY_LINE_TYPE cmock_line, int number, Token* cmock_to_return);
-typedef Token* (* CMOCK_createNumberToken_CALLBACK)(int number, int cmock_num_calls);
+void createNumberToken_CMockExpectAndReturn(UNITY_LINE_TYPE cmock_line, int number, NumberToken* cmock_to_return);
+typedef NumberToken* (* CMOCK_createNumberToken_CALLBACK)(int number, int cmock_num_calls);
 void createNumberToken_StubWithCallback(CMOCK_createNumberToken_CALLBACK Callback);
 #define createNumberToken_ExpectAndThrow(number, cmock_to_throw) createNumberToken_CMockExpectAndThrow(__LINE__, number, cmock_to_throw)
 void createNumberToken_CMockExpectAndThrow(UNITY_LINE_TYPE cmock_line, int number, CEXCEPTION_T cmock_to_throw);

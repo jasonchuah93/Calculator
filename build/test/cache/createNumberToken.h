@@ -9,4 +9,4 @@
 
 
 
-Token *createNumberToken(int number);
+NumberToken *createNumberToken(int number);
