@@ -46,7 +46,7 @@ int evaluate(char *expression,Stack *dataStack,Stack *operatorStack){
 		if(counter%2==0&&token->type==OPERATOR_TOKEN){
 			Throw(ERR_NOT_DATA);
 		}
-		else if(counter%2!=0&&token->type==NUMBER_TOKEN){
+		else if(counter%2==1&&token->type==NUMBER_TOKEN){
 			Throw(ERR_NOT_OPERATOR);
 		}
 		

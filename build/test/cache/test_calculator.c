@@ -2666,21 +2666,15 @@ void test_should_evaluate_43_HASHTAG_42_and_throw_error_invalid_operator(void){
 
 
 
-
-
-
-
-
-
  { jmp_buf *PrevFrame, NewFrame; unsigned int MY_ID = (0); PrevFrame = CExceptionFrames[(0)].pFrame; CExceptionFrames[MY_ID].pFrame = (jmp_buf*)(&NewFrame); CExceptionFrames[MY_ID].Exception = (0x5A5A5A5A); if (_setjmp(NewFrame) == 0) { if (&PrevFrame){
 
   evaluate("43#42",&dataStack,&operatorStack);
 
-   UnityFail( ("Should throw ERR_INVALID_OPERATOR"), (_U_UINT)1346);;
+   UnityFail( ("Should throw ERR_INVALID_OPERATOR"), (_U_UINT)1343);;
 
   }else { } CExceptionFrames[MY_ID].Exception = (0x5A5A5A5A); } else { e = CExceptionFrames[MY_ID].Exception; e=e; } CExceptionFrames[MY_ID].pFrame = PrevFrame; } if (CExceptionFrames[(0)].Exception != (0x5A5A5A5A)){
 
-   UnityAssertEqualNumber((_U_SINT)((ERR_INVALID_OPERATOR)), (_U_SINT)((e)), (((void *)0)), (_U_UINT)1348, UNITY_DISPLAY_STYLE_INT);
+   UnityAssertEqualNumber((_U_SINT)((ERR_INVALID_OPERATOR)), (_U_SINT)((e)), (((void *)0)), (_U_UINT)1345, UNITY_DISPLAY_STYLE_INT);
 
   }
 

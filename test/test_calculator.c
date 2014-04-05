@@ -1338,9 +1338,6 @@ void test_should_evaluate_43_HASHTAG_42_and_throw_error_invalid_operator(void){
 	//HASHTAG
 	nextToken_ExpectAndThrow(&tokenizer,ERR_INVALID_OPERATOR);
 	
-	
-	
-	
 	Try{
 		evaluate("43#42",&dataStack,&operatorStack);
 		 TEST_FAIL_MESSAGE("Should throw ERR_INVALID_OPERATOR");
