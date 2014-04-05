@@ -81,11 +81,32 @@
 - :test: test_should_return_6_for_3_plus_4_plus_5_minus_6
   :line: 785
   :message: ''
+- :test: test_should_evaluate_266_OR_27_XOR_28_PLUS_29_AND_30
+  :line: 889
+  :message: ''
+- :test: test_should_evaluate_211_AND_22_XOR_23_PLUS_24_MULTIPLY_25
+  :line: 1022
+  :message: ''
+- :test: test_should_evaluate_and_throw_error_not_data_if_first_token_is_operator
+  :line: 1155
+  :message: ''
+- :test: test_should_evaluate_38_space_39_and_throw_error_not_operator
+  :line: 1181
+  :message: ''
+- :test: test_should_evaluate_40_plus_multiply_43_and_throw_error_not_data
+  :line: 1212
+  :message: ''
+- :test: test_should_evaluate_42_XOR_2_MINUS_and_throw_error_no_data
+  :line: 1257
+  :message: ''
+- :test: test_should_evaluate_43_HASHTAG_42_and_throw_error_invalid_operator
+  :line: 1313
+  :message: ''
 :failures: []
 :ignores: []
 :counts:
-  :total: 26
-  :passed: 26
+  :total: 33
+  :passed: 33
   :failed: 0
   :ignored: 0
 :stdout:
@@ -95,3 +116,7 @@
 - 'Answer : 12 '
 - 'counter needed for each expression : 7 '
 - 'Answer : 6 '
+- 'counter needed for each expression : 9 '
+- 'Answer : 266 '
+- 'counter needed for each expression : 9 '
+- 'Answer : 81 '

@@ -55,7 +55,7 @@ int calculate(OperatorToken *opeToken, NumberToken *first, NumberToken *second){
 		
 		default:
 		{
-			Throw(ERR_NOT_OPERATOR);
+			Throw(ERR_INVALID_OPERATOR);
 		}
 		
 	}

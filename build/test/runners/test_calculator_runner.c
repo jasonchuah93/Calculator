@@ -68,6 +68,13 @@ extern void test_shunting_yard_should_return_0_if_the_expression_is_null(void);
 extern void test_should_return_3_for_1_plus_2(void);
 extern void test_should_return_12_for_4_multiply_3(void);
 extern void test_should_return_6_for_3_plus_4_plus_5_minus_6(void);
+extern void test_should_evaluate_266_OR_27_XOR_28_PLUS_29_AND_30(void);
+extern void test_should_evaluate_211_AND_22_XOR_23_PLUS_24_MULTIPLY_25(void);
+extern void test_should_evaluate_and_throw_error_not_data_if_first_token_is_operator(void);
+extern void test_should_evaluate_38_space_39_and_throw_error_not_operator(void);
+extern void test_should_evaluate_40_plus_multiply_43_and_throw_error_not_data(void);
+extern void test_should_evaluate_42_XOR_2_MINUS_and_throw_error_no_data(void);
+extern void test_should_evaluate_43_HASHTAG_42_and_throw_error_invalid_operator(void);
 
 
 //=======Mock Management=====
@@ -138,6 +145,13 @@ int main(void)
   RUN_TEST(test_should_return_3_for_1_plus_2, 676);
   RUN_TEST(test_should_return_12_for_4_multiply_3, 731);
   RUN_TEST(test_should_return_6_for_3_plus_4_plus_5_minus_6, 785);
+  RUN_TEST(test_should_evaluate_266_OR_27_XOR_28_PLUS_29_AND_30, 889);
+  RUN_TEST(test_should_evaluate_211_AND_22_XOR_23_PLUS_24_MULTIPLY_25, 1022);
+  RUN_TEST(test_should_evaluate_and_throw_error_not_data_if_first_token_is_operator, 1155);
+  RUN_TEST(test_should_evaluate_38_space_39_and_throw_error_not_operator, 1181);
+  RUN_TEST(test_should_evaluate_40_plus_multiply_43_and_throw_error_not_data, 1212);
+  RUN_TEST(test_should_evaluate_42_XOR_2_MINUS_and_throw_error_no_data, 1257);
+  RUN_TEST(test_should_evaluate_43_HASHTAG_42_and_throw_error_invalid_operator, 1313);
 
   return (UnityEnd());
 }

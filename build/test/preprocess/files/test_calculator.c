@@ -74,7 +74,7 @@ void test_evaluate_should_throw_error_when_encounter_invalid_operator(void){
 
  else { } CExceptionFrames[MY_ID].Exception = (0x5A5A5A5A); } else { e = CExceptionFrames[MY_ID].Exception; e=e; } CExceptionFrames[MY_ID].pFrame = PrevFrame; } if (CExceptionFrames[(0)].Exception != (0x5A5A5A5A)){
 
-  UnityAssertEqualNumber((_U_SINT)((ERR_NOT_OPERATOR)), (_U_SINT)((e)), (((void *)0)), (_U_UINT)45, UNITY_DISPLAY_STYLE_INT);
+  UnityAssertEqualNumber((_U_SINT)((ERR_INVALID_OPERATOR)), (_U_SINT)((e)), (((void *)0)), (_U_UINT)45, UNITY_DISPLAY_STYLE_INT);
 
  }
 
@@ -1757,5 +1757,931 @@ void test_should_return_6_for_3_plus_4_plus_5_minus_6(void){
  printf("Answer : %d ",check);
 
 
+
+}
+
+
+
+void test_should_evaluate_266_OR_27_XOR_28_PLUS_29_AND_30(void){
+
+ Stack dataStack;
+
+ Stack operatorStack;
+
+ int check;
+
+
+
+ Tokenizer tokenizer = {.expression = "266|27^28+29&30", .startIndex = 0};
+
+
+
+ NumberToken number266 = {.type= NUMBER_TOKEN, .value=266};
+
+ Token *token1 = (Token*)&number266;
+
+
+
+ OperatorToken OR = {.type= OPERATOR_TOKEN, .name = "|", .precedence=10};
+
+ Token *token2 = (Token*)&OR;
+
+
+
+ NumberToken number27 = {.type= NUMBER_TOKEN, .value=27};
+
+ Token *token3 = (Token*)&number27;
+
+
+
+ OperatorToken XOR = {.type= OPERATOR_TOKEN, .name = "^", .precedence=50};
+
+ Token *token4 = (Token*)&XOR;
+
+
+
+ NumberToken number28 = {.type= NUMBER_TOKEN, .value=28};
+
+ Token *token5 = (Token*)&number28;
+
+
+
+ OperatorToken plus = {.type= OPERATOR_TOKEN, .name = "+", .precedence=70};
+
+ Token *token6 = (Token*)&plus;
+
+
+
+ NumberToken number29 = {.type= NUMBER_TOKEN, .value=29};
+
+ Token *token7 = (Token*)&number29;
+
+
+
+ NumberToken tempAns1 = {.type= NUMBER_TOKEN, .value=57};
+
+
+
+ NumberToken tempAns2 = {.type= NUMBER_TOKEN, .value=34};
+
+
+
+ OperatorToken AND = {.type= OPERATOR_TOKEN, .name = "&", .precedence=20};
+
+ Token *token8 = (Token*)&AND;
+
+
+
+ NumberToken number30 = {.type= NUMBER_TOKEN, .value=30};
+
+ Token *token9 = (Token*)&number30;
+
+
+
+ NumberToken tempAns3 = {.type= NUMBER_TOKEN, .value=2};
+
+
+
+ NumberToken finalAns = {.type= NUMBER_TOKEN, .value=266};
+
+
+
+ stackNew_CMockExpectAndReturn(931, &dataStack);
+
+ stackNew_CMockExpectAndReturn(932, &operatorStack);
+
+ tokenizerNew_CMockExpectAndReturn(933, "266|27^28+29&30", &tokenizer);
+
+
+
+
+
+ nextToken_CMockExpectAndReturn(936, &tokenizer, token1);
+
+ isNumber_CMockExpectAndReturn(937, token1, 1);
+
+ push_CMockExpect(938, token1, &dataStack);
+
+
+
+
+
+ nextToken_CMockExpectAndReturn(941, &tokenizer, token2);
+
+ isNumber_CMockExpectAndReturn(942, token2, 0);
+
+ isOperator_CMockExpectAndReturn(943, token2, 1);
+
+ pop_CMockExpectAndReturn(944, &operatorStack, ((void *)0));
+
+ push_CMockExpect(945, token2, &operatorStack);
+
+
+
+
+
+ nextToken_CMockExpectAndReturn(948, &tokenizer, token3);
+
+ isNumber_CMockExpectAndReturn(949, token3, 1);
+
+ push_CMockExpect(950, token3, &dataStack);
+
+
+
+
+
+ nextToken_CMockExpectAndReturn(953, &tokenizer, token4);
+
+ isNumber_CMockExpectAndReturn(954, token4, 0);
+
+ isOperator_CMockExpectAndReturn(955, token4, 1);
+
+ pop_CMockExpectAndReturn(956, &operatorStack, token2);
+
+ push_CMockExpect(957, token2, &operatorStack);
+
+ push_CMockExpect(958, token4, &operatorStack);
+
+
+
+
+
+ nextToken_CMockExpectAndReturn(961, &tokenizer, token5);
+
+ isNumber_CMockExpectAndReturn(962, token5, 1);
+
+ push_CMockExpect(963, token5, &dataStack);
+
+
+
+
+
+ nextToken_CMockExpectAndReturn(966, &tokenizer, token6);
+
+ isNumber_CMockExpectAndReturn(967, token6, 0);
+
+ isOperator_CMockExpectAndReturn(968, token6, 1);
+
+ pop_CMockExpectAndReturn(969, &operatorStack, token4);
+
+ push_CMockExpect(970, token4, &operatorStack);
+
+ push_CMockExpect(971, token6, &operatorStack);
+
+
+
+
+
+ nextToken_CMockExpectAndReturn(974, &tokenizer, token7);
+
+ isNumber_CMockExpectAndReturn(975, token7, 1);
+
+ push_CMockExpect(976, token7, &dataStack);
+
+
+
+
+
+ nextToken_CMockExpectAndReturn(979, &tokenizer, token8);
+
+ isNumber_CMockExpectAndReturn(980, token8, 0);
+
+ isOperator_CMockExpectAndReturn(981, token8, 1);
+
+ pop_CMockExpectAndReturn(982, &operatorStack, token6);
+
+ pop_CMockExpectAndReturn(983, &dataStack, token7);
+
+ pop_CMockExpectAndReturn(984, &dataStack, token5);
+
+ createNumberToken_CMockExpectAndReturn(985, 57, &tempAns1);
+
+ push_CMockExpect(986, &tempAns1, &dataStack);
+
+ pop_CMockExpectAndReturn(987, &operatorStack, token4);
+
+ pop_CMockExpectAndReturn(988, &dataStack, &tempAns1);
+
+ pop_CMockExpectAndReturn(989, &dataStack, token3);
+
+ createNumberToken_CMockExpectAndReturn(990, 34, &tempAns2);
+
+ push_CMockExpect(991, &tempAns2, &dataStack);
+
+ pop_CMockExpectAndReturn(992, &operatorStack, token2);
+
+ push_CMockExpect(993, token2, &operatorStack);
+
+ push_CMockExpect(994, token8, &operatorStack);
+
+
+
+
+
+ nextToken_CMockExpectAndReturn(997, &tokenizer, token9);
+
+ isNumber_CMockExpectAndReturn(998, token9, 1);
+
+ push_CMockExpect(999, token9, &dataStack);
+
+ nextToken_CMockExpectAndReturn(1000, &tokenizer, ((void *)0));
+
+
+
+
+
+ pop_CMockExpectAndReturn(1003, &operatorStack, token8);
+
+ pop_CMockExpectAndReturn(1004, &dataStack, token9);
+
+ pop_CMockExpectAndReturn(1005, &dataStack, &tempAns2);
+
+ createNumberToken_CMockExpectAndReturn(1006, 2, &tempAns3);
+
+ push_CMockExpect(1007, &tempAns3, &dataStack);
+
+ pop_CMockExpectAndReturn(1008, &operatorStack, token2);
+
+ pop_CMockExpectAndReturn(1009, &dataStack, &tempAns3);
+
+ pop_CMockExpectAndReturn(1010, &dataStack, token1);
+
+ createNumberToken_CMockExpectAndReturn(1011, 266, &finalAns);
+
+ push_CMockExpect(1012, &finalAns, &dataStack);
+
+ pop_CMockExpectAndReturn(1013, &operatorStack, ((void *)0));
+
+
+
+ pop_CMockExpectAndReturn(1015, &dataStack, &finalAns);
+
+
+
+ check=evaluate("266|27^28+29&30",&dataStack,&operatorStack);
+
+ UnityAssertEqualNumber((_U_SINT)((266)), (_U_SINT)((check)), (((void *)0)), (_U_UINT)1018, UNITY_DISPLAY_STYLE_INT);
+
+ printf("Answer : %d ",check);
+
+}
+
+
+
+void test_should_evaluate_211_AND_22_XOR_23_PLUS_24_MULTIPLY_25(void){
+
+ Stack dataStack;
+
+ Stack operatorStack;
+
+ int check;
+
+
+
+ Tokenizer tokenizer = {.expression = "211&22^23+24*25", .startIndex = 0};
+
+
+
+ NumberToken number211 = {.type= NUMBER_TOKEN, .value=211};
+
+ Token *token1 = (Token*)&number211;
+
+
+
+ OperatorToken AND = {.type= OPERATOR_TOKEN, .name = "&", .precedence=20};
+
+ Token *token2 = (Token*)&AND;
+
+
+
+ NumberToken number22 = {.type= NUMBER_TOKEN, .value=22};
+
+ Token *token3 = (Token*)&number22;
+
+
+
+ OperatorToken XOR = {.type= OPERATOR_TOKEN, .name = "^", .precedence=50};
+
+ Token *token4 = (Token*)&XOR;
+
+
+
+ NumberToken number23 = {.type= NUMBER_TOKEN, .value=23};
+
+ Token *token5 = (Token*)&number23;
+
+
+
+ OperatorToken plus = {.type= OPERATOR_TOKEN, .name = "+", .precedence=70};
+
+ Token *token6 = (Token*)&plus;
+
+
+
+ NumberToken number24 = {.type= NUMBER_TOKEN, .value=24};
+
+ Token *token7 = (Token*)&number24;
+
+
+
+ OperatorToken multiply = {.type= OPERATOR_TOKEN, .name = "*", .precedence=100};
+
+ Token *token8 = (Token*)&multiply;
+
+
+
+ NumberToken number25 = {.type= NUMBER_TOKEN, .value=25};
+
+ Token *token9 = (Token*)&number25;
+
+
+
+ NumberToken tempAns1 = {.type= NUMBER_TOKEN, .value=600};
+
+
+
+ NumberToken tempAns2 = {.type= NUMBER_TOKEN, .value=623};
+
+
+
+ NumberToken tempAns3 = {.type= NUMBER_TOKEN, .value=633};
+
+
+
+ NumberToken finalAns = {.type= NUMBER_TOKEN, .value=81};
+
+
+
+ stackNew_CMockExpectAndReturn(1064, &dataStack);
+
+ stackNew_CMockExpectAndReturn(1065, &operatorStack);
+
+ tokenizerNew_CMockExpectAndReturn(1066, "211&22^23+24*25", &tokenizer);
+
+
+
+
+
+ nextToken_CMockExpectAndReturn(1069, &tokenizer, token1);
+
+ isNumber_CMockExpectAndReturn(1070, token1, 1);
+
+ push_CMockExpect(1071, token1, &dataStack);
+
+
+
+
+
+ nextToken_CMockExpectAndReturn(1074, &tokenizer, token2);
+
+ isNumber_CMockExpectAndReturn(1075, token2, 0);
+
+ isOperator_CMockExpectAndReturn(1076, token2, 1);
+
+ pop_CMockExpectAndReturn(1077, &operatorStack, ((void *)0));
+
+ push_CMockExpect(1078, token2, &operatorStack);
+
+
+
+
+
+ nextToken_CMockExpectAndReturn(1081, &tokenizer, token3);
+
+ isNumber_CMockExpectAndReturn(1082, token3, 1);
+
+ push_CMockExpect(1083, token3, &dataStack);
+
+
+
+
+
+ nextToken_CMockExpectAndReturn(1086, &tokenizer, token4);
+
+ isNumber_CMockExpectAndReturn(1087, token4, 0);
+
+ isOperator_CMockExpectAndReturn(1088, token4, 1);
+
+ pop_CMockExpectAndReturn(1089, &operatorStack, token2);
+
+ push_CMockExpect(1090, token2, &operatorStack);
+
+ push_CMockExpect(1091, token4, &operatorStack);
+
+
+
+
+
+ nextToken_CMockExpectAndReturn(1094, &tokenizer, token5);
+
+ isNumber_CMockExpectAndReturn(1095, token5, 1);
+
+ push_CMockExpect(1096, token5, &dataStack);
+
+
+
+
+
+ nextToken_CMockExpectAndReturn(1099, &tokenizer, token6);
+
+ isNumber_CMockExpectAndReturn(1100, token6, 0);
+
+ isOperator_CMockExpectAndReturn(1101, token6, 1);
+
+ pop_CMockExpectAndReturn(1102, &operatorStack, token4);
+
+ push_CMockExpect(1103, token4, &operatorStack);
+
+ push_CMockExpect(1104, token6, &operatorStack);
+
+
+
+
+
+ nextToken_CMockExpectAndReturn(1107, &tokenizer, token7);
+
+ isNumber_CMockExpectAndReturn(1108, token7, 1);
+
+ push_CMockExpect(1109, token7, &dataStack);
+
+
+
+
+
+ nextToken_CMockExpectAndReturn(1112, &tokenizer, token8);
+
+ isNumber_CMockExpectAndReturn(1113, token8, 0);
+
+ isOperator_CMockExpectAndReturn(1114, token8, 1);
+
+ pop_CMockExpectAndReturn(1115, &operatorStack, token6);
+
+ push_CMockExpect(1116, token6, &operatorStack);
+
+ push_CMockExpect(1117, token8, &operatorStack);
+
+
+
+
+
+ nextToken_CMockExpectAndReturn(1120, &tokenizer, token9);
+
+ isNumber_CMockExpectAndReturn(1121, token9, 1);
+
+ push_CMockExpect(1122, token9, &dataStack);
+
+ nextToken_CMockExpectAndReturn(1123, &tokenizer, ((void *)0));
+
+
+
+
+
+ pop_CMockExpectAndReturn(1126, &operatorStack, token8);
+
+ pop_CMockExpectAndReturn(1127, &dataStack, token9);
+
+ pop_CMockExpectAndReturn(1128, &dataStack, token7);
+
+ createNumberToken_CMockExpectAndReturn(1129, 600, &tempAns1);
+
+ push_CMockExpect(1130, &tempAns1, &dataStack);
+
+ pop_CMockExpectAndReturn(1131, &operatorStack, token6);
+
+ pop_CMockExpectAndReturn(1132, &dataStack, &tempAns1);
+
+ pop_CMockExpectAndReturn(1133, &dataStack, token5);
+
+ createNumberToken_CMockExpectAndReturn(1134, 623, &tempAns2);
+
+ push_CMockExpect(1135, &tempAns2, &dataStack);
+
+ pop_CMockExpectAndReturn(1136, &operatorStack, token4);
+
+ pop_CMockExpectAndReturn(1137, &dataStack, &tempAns2);
+
+ pop_CMockExpectAndReturn(1138, &dataStack, token3);
+
+ createNumberToken_CMockExpectAndReturn(1139, 633, &tempAns3);
+
+ push_CMockExpect(1140, &tempAns3, &dataStack);
+
+ pop_CMockExpectAndReturn(1141, &operatorStack, token2);
+
+ pop_CMockExpectAndReturn(1142, &dataStack, &tempAns3);
+
+ pop_CMockExpectAndReturn(1143, &dataStack, token1);
+
+ createNumberToken_CMockExpectAndReturn(1144, 81, &finalAns);
+
+ push_CMockExpect(1145, &finalAns, &dataStack);
+
+ pop_CMockExpectAndReturn(1146, &operatorStack, ((void *)0));
+
+
+
+ pop_CMockExpectAndReturn(1148, &dataStack, &finalAns);
+
+
+
+ check=evaluate("211&22^23+24*25",&dataStack,&operatorStack);
+
+ UnityAssertEqualNumber((_U_SINT)((81)), (_U_SINT)((check)), (((void *)0)), (_U_UINT)1151, UNITY_DISPLAY_STYLE_INT);
+
+ printf("Answer : %d ",check);
+
+}
+
+
+
+void test_should_evaluate_and_throw_error_not_data_if_first_token_is_operator(void){
+
+ Stack dataStack;
+
+ Stack operatorStack;
+
+ int check;
+
+ ErrorCode e;
+
+
+
+ Tokenizer tokenizer = {.expression = "+", .startIndex = 0};
+
+
+
+ OperatorToken plus = {.type= OPERATOR_TOKEN, .name = "+", .precedence=70};
+
+ Token *token1 = (Token*)&plus;
+
+
+
+ stackNew_CMockExpectAndReturn(1166, &dataStack);
+
+ stackNew_CMockExpectAndReturn(1167, &operatorStack);
+
+ tokenizerNew_CMockExpectAndReturn(1168, "+", &tokenizer);
+
+
+
+ nextToken_CMockExpectAndReturn(1170, &tokenizer, token1);
+
+
+
+ { jmp_buf *PrevFrame, NewFrame; unsigned int MY_ID = (0); PrevFrame = CExceptionFrames[(0)].pFrame; CExceptionFrames[MY_ID].pFrame = (jmp_buf*)(&NewFrame); CExceptionFrames[MY_ID].Exception = (0x5A5A5A5A); if (_setjmp(NewFrame) == 0) { if (&PrevFrame){
+
+  check=evaluate("+",&dataStack,&operatorStack);
+
+   UnityFail( ("Should throw ERR_NOT_DATA"), (_U_UINT)1174);;
+
+  }else { } CExceptionFrames[MY_ID].Exception = (0x5A5A5A5A); } else { e = CExceptionFrames[MY_ID].Exception; e=e; } CExceptionFrames[MY_ID].pFrame = PrevFrame; } if (CExceptionFrames[(0)].Exception != (0x5A5A5A5A)){
+
+   UnityAssertEqualNumber((_U_SINT)((ERR_NOT_DATA)), (_U_SINT)((e)), (((void *)0)), (_U_UINT)1176, UNITY_DISPLAY_STYLE_INT);
+
+  }
+
+
+
+}
+
+
+
+void test_should_evaluate_38_space_39_and_throw_error_not_operator(void){
+
+ Stack dataStack;
+
+ Stack operatorStack;
+
+ int check;
+
+ ErrorCode e;
+
+
+
+ Tokenizer tokenizer = {.expression = "38 39 +", .startIndex = 0};
+
+
+
+ NumberToken number38 = {.type= NUMBER_TOKEN, .value=38};
+
+ Token *token1 = (Token*)&number38;
+
+
+
+ NumberToken number39 = {.type= NUMBER_TOKEN, .value=39};
+
+ Token *token2 = (Token*)&number39;
+
+
+
+ stackNew_CMockExpectAndReturn(1195, &dataStack);
+
+ stackNew_CMockExpectAndReturn(1196, &operatorStack);
+
+ tokenizerNew_CMockExpectAndReturn(1197, "38 39 +", &tokenizer);
+
+
+
+ nextToken_CMockExpectAndReturn(1199, &tokenizer, token1);
+
+ isNumber_CMockExpectAndReturn(1200, token1, 1);
+
+ push_CMockExpect(1201, token1, &dataStack);
+
+ nextToken_CMockExpectAndReturn(1202, &tokenizer, token2);
+
+
+
+ { jmp_buf *PrevFrame, NewFrame; unsigned int MY_ID = (0); PrevFrame = CExceptionFrames[(0)].pFrame; CExceptionFrames[MY_ID].pFrame = (jmp_buf*)(&NewFrame); CExceptionFrames[MY_ID].Exception = (0x5A5A5A5A); if (_setjmp(NewFrame) == 0) { if (&PrevFrame){
+
+  evaluate("38 39 +",&dataStack,&operatorStack);
+
+   UnityFail( ("Should throw ERR_NOT_OPERATOR"), (_U_UINT)1206);;
+
+  }else { } CExceptionFrames[MY_ID].Exception = (0x5A5A5A5A); } else { e = CExceptionFrames[MY_ID].Exception; e=e; } CExceptionFrames[MY_ID].pFrame = PrevFrame; } if (CExceptionFrames[(0)].Exception != (0x5A5A5A5A)){
+
+   UnityAssertEqualNumber((_U_SINT)((ERR_NOT_OPERATOR)), (_U_SINT)((e)), (((void *)0)), (_U_UINT)1208, UNITY_DISPLAY_STYLE_INT);
+
+  }
+
+}
+
+
+
+void test_should_evaluate_40_plus_multiply_43_and_throw_error_not_data(void){
+
+
+
+ Stack dataStack;
+
+ Stack operatorStack;
+
+ int check;
+
+ ErrorCode e;
+
+
+
+ Tokenizer tokenizer = {.expression = "40+*43", .startIndex = 0};
+
+
+
+ NumberToken number40 = {.type= NUMBER_TOKEN, .value=40};
+
+ Token *token1 = (Token*)&number40;
+
+
+
+ OperatorToken plus = {.type= OPERATOR_TOKEN, .name = "+", .precedence=70};
+
+ Token *token2 = (Token*)&plus;
+
+
+
+ OperatorToken multiply = {.type= OPERATOR_TOKEN, .name = "*", .precedence=100};
+
+ Token *token3 = (Token*)&multiply;
+
+
+
+ NumberToken number43 = {.type= NUMBER_TOKEN, .value=43};
+
+ Token *token4 = (Token*)&number43;
+
+
+
+ stackNew_CMockExpectAndReturn(1233, &dataStack);
+
+ stackNew_CMockExpectAndReturn(1234, &operatorStack);
+
+ tokenizerNew_CMockExpectAndReturn(1235, "40+*43", &tokenizer);
+
+
+
+ nextToken_CMockExpectAndReturn(1237, &tokenizer, token1);
+
+ isNumber_CMockExpectAndReturn(1238, token1, 1);
+
+ push_CMockExpect(1239, token1, &dataStack);
+
+
+
+ nextToken_CMockExpectAndReturn(1241, &tokenizer, token2);
+
+ isNumber_CMockExpectAndReturn(1242, token2, 0);
+
+ isOperator_CMockExpectAndReturn(1243, token2, 1);
+
+ pop_CMockExpectAndReturn(1244, &operatorStack, ((void *)0));
+
+ push_CMockExpect(1245, token2, &operatorStack);
+
+
+
+ nextToken_CMockExpectAndReturn(1247, &tokenizer, token3);
+
+
+
+ { jmp_buf *PrevFrame, NewFrame; unsigned int MY_ID = (0); PrevFrame = CExceptionFrames[(0)].pFrame; CExceptionFrames[MY_ID].pFrame = (jmp_buf*)(&NewFrame); CExceptionFrames[MY_ID].Exception = (0x5A5A5A5A); if (_setjmp(NewFrame) == 0) { if (&PrevFrame){
+
+  evaluate("40+*43",&dataStack,&operatorStack);
+
+   UnityFail( ("Should throw ERR_NOT_DATA"), (_U_UINT)1251);;
+
+  }else { } CExceptionFrames[MY_ID].Exception = (0x5A5A5A5A); } else { e = CExceptionFrames[MY_ID].Exception; e=e; } CExceptionFrames[MY_ID].pFrame = PrevFrame; } if (CExceptionFrames[(0)].Exception != (0x5A5A5A5A)){
+
+   UnityAssertEqualNumber((_U_SINT)((ERR_NOT_DATA)), (_U_SINT)((e)), (((void *)0)), (_U_UINT)1253, UNITY_DISPLAY_STYLE_INT);
+
+  }
+
+}
+
+
+
+void test_should_evaluate_42_XOR_2_MINUS_and_throw_error_no_data(void){
+
+
+
+ Stack dataStack;
+
+ Stack operatorStack;
+
+ int check;
+
+ ErrorCode e;
+
+
+
+ Tokenizer tokenizer = {.expression = "42^2-", .startIndex = 0};
+
+
+
+ NumberToken number42 = {.type= NUMBER_TOKEN, .value=42};
+
+ Token *token1 = (Token*)&number42;
+
+
+
+ OperatorToken xor = {.type= OPERATOR_TOKEN, .name = "^", .precedence=50};
+
+ Token *token2 = (Token*)&xor;
+
+
+
+ NumberToken number2 = {.type= NUMBER_TOKEN, .value=2};
+
+ Token *token3 = (Token*)&number2;
+
+
+
+ OperatorToken minus = {.type= OPERATOR_TOKEN, .name = "-", .precedence=70};
+
+ Token *token4 = (Token*)&minus;
+
+
+
+ stackNew_CMockExpectAndReturn(1278, &dataStack);
+
+ stackNew_CMockExpectAndReturn(1279, &operatorStack);
+
+ tokenizerNew_CMockExpectAndReturn(1280, "42^2-", &tokenizer);
+
+
+
+ nextToken_CMockExpectAndReturn(1282, &tokenizer, token1);
+
+ isNumber_CMockExpectAndReturn(1283, token1, 1);
+
+ push_CMockExpect(1284, token1, &dataStack);
+
+
+
+ nextToken_CMockExpectAndReturn(1286, &tokenizer, token2);
+
+ isNumber_CMockExpectAndReturn(1287, token2, 0);
+
+ isOperator_CMockExpectAndReturn(1288, token2, 1);
+
+ pop_CMockExpectAndReturn(1289, &operatorStack, ((void *)0));
+
+ push_CMockExpect(1290, token2, &operatorStack);
+
+
+
+ nextToken_CMockExpectAndReturn(1292, &tokenizer, token3);
+
+ isNumber_CMockExpectAndReturn(1293, token3, 1);
+
+ push_CMockExpect(1294, token3, &dataStack);
+
+
+
+ nextToken_CMockExpectAndReturn(1296, &tokenizer, token4);
+
+ isNumber_CMockExpectAndReturn(1297, token4, 0);
+
+ isOperator_CMockExpectAndReturn(1298, token4, 1);
+
+ pop_CMockExpectAndReturn(1299, &operatorStack, token2);
+
+ push_CMockExpect(1300, token2, &operatorStack);
+
+ push_CMockExpect(1301, token4, &operatorStack);
+
+
+
+ nextToken_CMockExpectAndThrow(1303, &tokenizer, ERR_NOT_DATA);
+
+
+
+ { jmp_buf *PrevFrame, NewFrame; unsigned int MY_ID = (0); PrevFrame = CExceptionFrames[(0)].pFrame; CExceptionFrames[MY_ID].pFrame = (jmp_buf*)(&NewFrame); CExceptionFrames[MY_ID].Exception = (0x5A5A5A5A); if (_setjmp(NewFrame) == 0) { if (&PrevFrame){
+
+  evaluate("42^2-",&dataStack,&operatorStack);
+
+   UnityFail( ("Should throw ERR_NOT_DATA"), (_U_UINT)1307);;
+
+  }else { } CExceptionFrames[MY_ID].Exception = (0x5A5A5A5A); } else { e = CExceptionFrames[MY_ID].Exception; e=e; } CExceptionFrames[MY_ID].pFrame = PrevFrame; } if (CExceptionFrames[(0)].Exception != (0x5A5A5A5A)){
+
+   UnityAssertEqualNumber((_U_SINT)((ERR_NOT_DATA)), (_U_SINT)((e)), (((void *)0)), (_U_UINT)1309, UNITY_DISPLAY_STYLE_INT);
+
+  }
+
+}
+
+
+
+void test_should_evaluate_43_HASHTAG_42_and_throw_error_invalid_operator(void){
+
+
+
+ Stack dataStack;
+
+ Stack operatorStack;
+
+ int check;
+
+ ErrorCode e;
+
+
+
+ Tokenizer tokenizer = {.expression = "43#42", .startIndex = 0};
+
+
+
+ NumberToken number43 = {.type= NUMBER_TOKEN, .value=43};
+
+ Token *token1 = (Token*)&number43;
+
+
+
+ OperatorToken hashtag = {.type= OPERATOR_TOKEN, .name = "#", .precedence=50};
+
+ Token *token2 = (Token*)&hashtag;
+
+
+
+ NumberToken number42 = {.type= NUMBER_TOKEN, .value=42};
+
+ Token *token3 = (Token*)&number42;
+
+
+
+ stackNew_CMockExpectAndReturn(1331, &dataStack);
+
+ stackNew_CMockExpectAndReturn(1332, &operatorStack);
+
+ tokenizerNew_CMockExpectAndReturn(1333, "43#42", &tokenizer);
+
+
+
+ nextToken_CMockExpectAndReturn(1335, &tokenizer, token1);
+
+ isNumber_CMockExpectAndReturn(1336, token1, 1);
+
+ push_CMockExpect(1337, token1, &dataStack);
+
+
+
+ nextToken_CMockExpectAndThrow(1339, &tokenizer, ERR_INVALID_OPERATOR);
+
+
+
+
+
+
+
+
+
+ { jmp_buf *PrevFrame, NewFrame; unsigned int MY_ID = (0); PrevFrame = CExceptionFrames[(0)].pFrame; CExceptionFrames[MY_ID].pFrame = (jmp_buf*)(&NewFrame); CExceptionFrames[MY_ID].Exception = (0x5A5A5A5A); if (_setjmp(NewFrame) == 0) { if (&PrevFrame){
+
+  evaluate("43#42",&dataStack,&operatorStack);
+
+   UnityFail( ("Should throw ERR_INVALID_OPERATOR"), (_U_UINT)1346);;
+
+  }else { } CExceptionFrames[MY_ID].Exception = (0x5A5A5A5A); } else { e = CExceptionFrames[MY_ID].Exception; e=e; } CExceptionFrames[MY_ID].pFrame = PrevFrame; } if (CExceptionFrames[(0)].Exception != (0x5A5A5A5A)){
+
+   UnityAssertEqualNumber((_U_SINT)((ERR_INVALID_OPERATOR)), (_U_SINT)((e)), (((void *)0)), (_U_UINT)1348, UNITY_DISPLAY_STYLE_INT);
+
+  }
 
 }
